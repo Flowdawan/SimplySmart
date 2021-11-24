@@ -12,15 +12,10 @@
 ░╚═══██╗██║╚██╔╝██║██╔══██║██╔══██╗░░░██║░░░
 ██████╔╝██║░╚═╝░██║██║░░██║██║░░██║░░░██║░░░
 ╚═════╝░╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
+
 - - -
 
 **Our web application helps you to learn more about Electronics and Microcontroller.**
-
-- - -
-
-### Project based on:
-
-<p align="center"><a href="https://www.djangoproject.com/" target="_blank">Django</a></p>
 
 - - -
 
