@@ -1,20 +1,29 @@
 {% extends 'layout.html' %} 
 {% block content %}
 
+    <h1> {{ questions.answer_1_right_one }} </h1>
     <div class="bg-transparent m-4 p-4">
         <h1 class="text-right">Question:</h1>
         <div class="mb-2">
-            <h5 class="text-right">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
+            <h5 class="text-right">{{ question }}</h5>
         </div>
     </div>
 
     <div class="list-group">
-
-        <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-        <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-        <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
+        <ul style="list-style-type:none;">
+            <li><a href="{% url 'checkAnswer' question.id 1 %}" class="list-group-item list-group-item-action">{{ question.answer_1_right_one }}</a></li>
+            <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_2 }}</a></li>
+            <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_3 }}</a></li>
+            <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_4  }}</a></li>
+        </ul>
     </div>
+
+    <script>
+        var ul = document.querySelector('ul');
+        for (var i = ul.children.length; i >= 0; i--) {
+            ul.appendChild(ul.children[Math.random() * i | 0]);
+        }
+    </script>
 
     <div class="bg-transparent m-3 p-3">
         <h6 class="text-center">Your badges here:</h6>
