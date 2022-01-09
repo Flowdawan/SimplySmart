@@ -21,5 +21,6 @@ from game import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('game/', include('game.urls')),
-    path('', views.menu),
+    path('game/', include('django.contrib.auth.urls')),
+    path('', views.menu)
 ]

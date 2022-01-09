@@ -1,14 +1,44 @@
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.hashers import make_password
+
 
 from game.models import Question
+from game.models import MyRegistrationForm
 
 # Create your views here.
-
 def signup(request):
-    return render(request, 'auth/signup.html')
+    if request.method == "POST":
+        form = MyRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            messages.success(request, ("Registration Successfull!"))
+            return redirect('menu')
+    else:
+        form = MyRegistrationForm()
+    return render(request, 'auth/signup.html', {'form': form})
 
 def signin(request):
-    return render(request, 'auth/signin.html')
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('menu')
+        else:
+            messages.success(request, ("Wrong Credentials, Please Try Again."))
+            return redirect('signin')
+    else:
+        return render(request, 'auth/signin.html')
+
+def signout(request):
+    logout(request)
+    messages.success(request, ("Successfully logged out"))
+    return redirect('signin')
 
 def menu(request):
     return render(request, 'game/menu.html')

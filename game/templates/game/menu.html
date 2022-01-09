@@ -3,7 +3,12 @@
 <div class="container">
     <div class="row">
         <div class="col">
-        <h1>Welcome to Simply Smart! Choose one of the options here</h1>
+            <h1>Welcome to Simply Smart! Choose one of the options here</h1>
+            {% if user.is_authenticated %}
+            <a href="{% url 'signout' %}" class="btn btn-primary">Logout</a>
+            {% else %}
+            <a href="{% url 'signin' %}" class="btn btn-primary">Login</a>
+            {% endif %}
         </div> 
     </div>
     <div class="row">
