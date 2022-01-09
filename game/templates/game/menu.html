@@ -1,5 +1,6 @@
 {% extends 'layout.html' %} 
 {% block content %}
+{% load static %}
 <div class="container">
     <div class="row">
         <div class="col">
@@ -14,7 +15,7 @@
     <div class="row">
         <div class="col">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" alt="Card image cap">
+            <img class="card-img-top" src="{% static 'images/electronicsGame.svg' %}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Start the regular Electronics game</h5>
                 <p class="card-text">Here you will be offered a broad variety of questions on such topics as GPIO, Interrupts, Timer and many more. Sounds like fun?</p>
@@ -24,7 +25,7 @@
         </div>
         <div class="col">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" alt="Card image cap">
+            <img class="card-img-top" src="{% static 'images/createGame.svg' %}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Start the special mode game</h5>
                 <p class="card-text">Enjoy our "Who wants to be a Millionaire?" special edition game</p>
@@ -34,7 +35,7 @@
         </div>
         <div class="col">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+            <img class="card-img-top" src="{% static 'images/userManage.svg' %}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">Create your own game</h5>
                 <p class="card-text">Want to create your own set a question? Have a really good idea for a fun game? </p>
