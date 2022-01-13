@@ -7,7 +7,10 @@ urlpatterns = [
     path('signout', views.signout, name='signout'),
     path('signup', views.signup, name='signup'),
     path('menu', views.menu, name='menu'),
-    path('emgame', views.regular_game, name='emgame'),
-    path('emgame/<int:question_id>', views.regular_game, name='emgame'),
+    path('regularGame', views.regular_game, name='regularGame'),
+    path('regularGame/<int:question_id>', views.regular_game, name='regularGame'),
     path('checkAnswer/<int:question_id>/<int:answer_id>', views.check_answer, name='checkAnswer'),
+    path('auth/manage', views.manageUser, name='manageUser'),
+    path('game/customGame/create', views.customGame, name='customGame'),
+
 ]

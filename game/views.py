@@ -96,3 +96,9 @@ def isEarnedBadge(question):
     if question.number_answered_right == 3:
         question.earned_Badge = True
         question.save()
+
+def manageUser(request):
+    return render(request, 'auth/manageUser.html')
+
+def customGame(request):
+    return render(request, 'game/customGame/gameCreate.html')
