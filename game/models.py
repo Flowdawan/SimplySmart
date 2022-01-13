@@ -5,7 +5,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 
-
 class Question(models.Model):
     def __str__(self):
         return self.question_1
@@ -17,6 +16,19 @@ class Question(models.Model):
     answer_4 = models.CharField(max_length=400, default='')
     answer_4 = models.CharField(max_length=400, default='')
 
+
+class Player(models.Model):
+    user = models.OneToOneField('auth.user', on_delete=models.CASCADE)
+    username = models.CharField(max_length=80, default='')
+    currentQuestion = models.IntegerField(default=0)
+
+
+class QuestionStat(models.Model):
+    question = models.ForeignKey('game.question', on_delete=models.CASCADE)
+    player = models.ForeignKey('game.player', on_delete=models.CASCADE)
+    question_text = models.CharField(max_length=650, default='')
+    number_answered_right = models.IntegerField(default=0)
+    earned_Badge = models.BooleanField(default=False)
 
 class MyRegistrationForm(UserCreationForm):
     email = EmailField(label="Email address", required=True)
