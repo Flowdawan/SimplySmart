@@ -5,7 +5,7 @@
 
 //logic to mix the questions
 function mixQuestions(){
-    var ul = document.querySelector('ul');
+    var ul = document.querySelector('.answers');
     for (var i = ul.children.length; i >= 0; i--) {
         ul.appendChild(ul.children[Math.random() * i | 0]);
     }
