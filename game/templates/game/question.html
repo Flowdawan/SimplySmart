@@ -1,5 +1,6 @@
 {% extends 'layout.html' %} 
 {% block content %}
+{% load static %}
 
     <h1> {{ questions.answer_1_right_one }} </h1>
     <div class="bg-transparent m-4 p-4">
@@ -10,7 +11,7 @@
     </div>
 
     <div class="list-group">
-        <ul style="list-style-type:none;">
+        <ul class="answers" style="list-style-type:none;">
             <li><a href="{% url 'checkAnswer' question.id 1 %}" class="list-group-item list-group-item-action">{{ question.answer_1_right_one }}</a></li>
             <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_2 }}</a></li>
             <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_3 }}</a></li>
@@ -19,7 +20,7 @@
     </div>
 
     <script>
-        var ul = document.querySelector('ul');
+        var ul = document.querySelector('.answers');
         for (var i = ul.children.length; i >= 0; i--) {
             ul.appendChild(ul.children[Math.random() * i | 0]);
         }
@@ -34,4 +35,9 @@
         {% endif %}
     </div>
     <span class="badge badge-pill badge-primary">Badge</span>
+{% endblock %}
+
+{% block scripts %}
+</script>
+    <script type="application/json" src="{% static 'js/gameLogic.js' %}"></script>
 {% endblock %}
