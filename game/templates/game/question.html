@@ -19,7 +19,8 @@
         </ul>
     </div>
 
-    <div class="bg-transparent m-3 p-3">
+    {% if user.is_authenticated %}
+        <div class="bg-transparent m-3 p-3">
         <h6 class="text-center">Your badges here:</h6>
         {% if questionstat.earned_Badge %}
         <p class="text-center">You have a BADGE!</p>
@@ -28,6 +29,10 @@
         {% endif %}
     </div>
     <span class="badge badge-pill badge-primary">Badge</span>
+    {% else %}
+        <p class="text-center">Please login to see your badges</p>
+    {% endif %}
+
 {% endblock %}
 
 {% block scripts %}

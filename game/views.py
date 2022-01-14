@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 
+from game.models import PlayerGameForm
 from game.models import Question
 from game.models import MyRegistrationForm
 from game.models import Player
@@ -52,7 +53,10 @@ def regular_game(request, question_id=0):
     if question_id >= len(questions):
         question_id = 0
     question = questions[question_id]
-    questionstat = getCurrentQuestion(request, question)
+    if request.user.is_authenticated:
+        questionstat = getCurrentQuestion(request, question)
+    else:
+        questionstat = ''
     return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat})
 
 
@@ -60,11 +64,12 @@ def check_answer(request, question_id=0, answer_id=0):
     questions = Question.objects.all()
     question = questions[question_id - 1]
     if (answer_id):
-        currentQuestion = getCurrentQuestion(request, question)
-        currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
-        currentQuestion.save()
-        isEarnedBadge(currentQuestion)
-        return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id})
+            if request.user.is_authenticated:
+                currentQuestion = getCurrentQuestion(request, question)
+                currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
+                currentQuestion.save()
+                isEarnedBadge(currentQuestion)
+            return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id})
     else:
         return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id})
 
@@ -101,4 +106,25 @@ def manageUser(request):
     return render(request, 'auth/manageUser.html')
 
 def customGame(request):
-    return render(request, 'game/customGame/gameCreate.html')
+    if request.user.is_authenticated:
+    # if this is a POST request we need to process the form data
+        if request.method == 'POST':
+            # create a form instance and populate it with data from the request:
+            form = PlayerGameForm(request.POST)
+            # check whether it's valid:
+            if form.is_valid():
+                # process the data in form.cleaned_data as required
+                newGame = form.save(commit=False)
+                newGame.user = request.user
+                newGame.save()
+                # redirect to a new URL:
+                return redirect('menu')
+            else:
+                return redirect('regularGame')
+
+        # if a GET (or any other method) we'll create a blank form
+        else:
+            form = PlayerGameForm()
+            return render(request, 'game/customGame/gameCreate.html', {'form': form})
+    else:
+        return redirect('signin')
