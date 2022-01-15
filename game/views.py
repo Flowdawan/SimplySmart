@@ -9,6 +9,8 @@ from game.models import MyRegistrationForm
 from game.models import Player
 from game.models import QuestionStat
 
+from game.templatetags import htmlEscape 
+
 
 # Create your views here.
 def signup(request):
@@ -49,8 +51,8 @@ def menu(request):
     return render(request, 'game/menu.html')
 
 
-def regular_game(request, question_id=0):
-    questions = Question.objects.all()
+def regular_game(request, question_id=0, gameMode=Question):
+    questions = gameMode.objects.all()
     if question_id >= len(questions):
         question_id = 0
     question = questions[question_id]
@@ -58,15 +60,19 @@ def regular_game(request, question_id=0):
         questionstat = getCurrentQuestion(request, question)
     else:
         questionstat = ''
-    correctAnswer = randint(0, 1000)
-    return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat, 'coorectAnswer' : correctAnswer})
+    answers = []
+    answers.append(htmlEscape.htmlspecialchars(question.answer_1_right_one))
+    answers.append(htmlEscape.htmlspecialchars(question.answer_2))
+    answers.append(htmlEscape.htmlspecialchars(question.answer_3))
+    answers.append(htmlEscape.htmlspecialchars(question.answer_4))
+    return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat, 'answers' : answers})
 
 
 def check_answer(request, question_id=0, answer=''):
     questions = Question.objects.all()
     question = questions[question_id - 1]
 
-    if (answer == question.answer_1_right_one):
+    if (answer == htmlEscape.htmlspecialchars(question.answer_1_right_one)):
             if request.user.is_authenticated:
                 currentQuestion = getCurrentQuestion(request, question)
                 currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
