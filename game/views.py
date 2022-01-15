@@ -1,3 +1,4 @@
+from random import randint
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -57,13 +58,15 @@ def regular_game(request, question_id=0):
         questionstat = getCurrentQuestion(request, question)
     else:
         questionstat = ''
-    return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat})
+    correctAnswer = randint(0, 1000)
+    return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat, 'coorectAnswer' : correctAnswer})
 
 
-def check_answer(request, question_id=0, answer_id=0):
+def check_answer(request, question_id=0, answer=''):
     questions = Question.objects.all()
     question = questions[question_id - 1]
-    if (answer_id):
+
+    if (answer == question.answer_1_right_one):
             if request.user.is_authenticated:
                 currentQuestion = getCurrentQuestion(request, question)
                 currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1

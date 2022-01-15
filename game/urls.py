@@ -9,7 +9,7 @@ urlpatterns = [
     path('menu', views.menu, name='menu'),
     path('regularGame', views.regular_game, name='regularGame'),
     path('regularGame/<int:question_id>', views.regular_game, name='regularGame'),
-    path('checkAnswer/<int:question_id>/<int:answer_id>', views.check_answer, name='checkAnswer'),
+    path('checkAnswer/<int:question_id>/<str:answer>', views.check_answer, name='checkAnswer'),
     path('auth/manage', views.manageUser, name='manageUser'),
     path('game/customGame/create', views.customGame, name='customGame'),
 
