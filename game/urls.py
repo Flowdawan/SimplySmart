@@ -12,5 +12,5 @@ urlpatterns = [
     path('checkAnswer/<int:question_id>/<str:answer>', views.check_answer, name='checkAnswer'),
     path('auth/manage', views.manageUser, name='manageUser'),
     path('game/customGame/create', views.customGame, name='customGame'),
-
+    path('game/customGame/create/questions/<str:game_names>', views.customGameQuestions, name='customGameQuestions'),
 ]

@@ -50,18 +50,17 @@ class MyRegistrationForm(UserCreationForm):
             user.save()
         return user
 
-# class PlayerGame(models.Model):
-#     def __str__(self):
-#         return self.game_name
-#     player = models.ForeignKey('game.player', on_delete=models.CASCADE)
-#     game_name = models.CharField(max_length=350, default='')
+class PlayerGame(models.Model):
+     def __str__(self):
+         return self.game_name
+     user = models.ForeignKey('auth.user', on_delete=models.CASCADE, default='')
+     game_name = models.CharField(max_length=350, default='')
         
 class PlayerQuestion(models.Model):
     def __str__(self):
         return self.question
     
-    game_name = models.CharField(max_length=350, default='')
-    user = models.ForeignKey('auth.user', on_delete=models.CASCADE, default='')
+    game_name = models.ForeignKey('game.PlayerGame', on_delete=models.CASCADE, default='')
     question = models.CharField(max_length=650, default='')
     answer_1_right_one = models.CharField(max_length=400, default='')
     answer_2 = models.CharField(max_length=400, default='')
@@ -70,7 +69,7 @@ class PlayerQuestion(models.Model):
 
 class PlayerGameForm(ModelForm):
     class Meta:
-        model = PlayerQuestion
+        model = PlayerGame
         fields = '__all__'
         exclude = ('user',)
         #fields = ['game', 'question', 'answer_1_right_one', 'answer_2', 'answer_3', 'answer_4']
@@ -79,5 +78,19 @@ class PlayerGameForm(ModelForm):
        return data
     def __init__(self, *args, **kwargs):
         super(PlayerGameForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
+class PlayerQuestionsForm(ModelForm):
+    class Meta:
+        model = PlayerQuestion
+        fields = '__all__'
+        exclude = ('game_name',)
+        #fields = ['game', 'question', 'answer_1_right_one', 'answer_2', 'answer_3', 'answer_4']
+    def validate_data(self):
+       data = self.cleaned_data['fields']
+       return data
+    def __init__(self, *args, **kwargs):
+        super(PlayerQuestionsForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
