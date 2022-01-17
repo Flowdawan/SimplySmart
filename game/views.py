@@ -17,6 +17,9 @@ from game.models import QuestionStat
 
 from game.templatetags import htmlEscape 
 
+def specialMode(request):
+    return redirect('https://simplysmart.at/')
+
 
 # Create your views here.
 def signup(request):
@@ -182,3 +185,5 @@ def customGameQuestions(request, game_names):
     else:
         return redirect('signin')
 
+def gameStatistic(request):
+    return render(request, 'game/gameStatistic.html')
