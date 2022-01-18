@@ -8,9 +8,10 @@ from django.contrib.auth.hashers import make_password
 
 class Question(models.Model):
     def __str__(self):
-        return self.question_1
+        return self.question
 
-    question_1 = models.CharField(max_length=650, default='')
+    game_mode = models.CharField(max_length=150, default='elmc')
+    question = models.CharField(max_length=650, default='')
     answer_1_right_one = models.CharField(max_length=400, default='')
     answer_2 = models.CharField(max_length=400, default='')
     answer_3 = models.CharField(max_length=400, default='')
@@ -55,23 +56,13 @@ class PlayerGame(models.Model):
          return self.game_name
      user = models.ForeignKey('auth.user', on_delete=models.CASCADE, default='')
      game_name = models.CharField(max_length=350, default='')
-        
-class PlayerQuestion(models.Model):
-    def __str__(self):
-        return self.question
-    
-    game_name = models.ForeignKey('game.PlayerGame', on_delete=models.CASCADE, default='')
-    question = models.CharField(max_length=650, default='')
-    answer_1_right_one = models.CharField(max_length=400, default='')
-    answer_2 = models.CharField(max_length=400, default='')
-    answer_3 = models.CharField(max_length=400, default='')
-    answer_4 = models.CharField(max_length=400, default='')
+     question = models.ManyToManyField('game.question')
 
 class PlayerGameForm(ModelForm):
     class Meta:
         model = PlayerGame
         fields = '__all__'
-        exclude = ('user',)
+        exclude = ('user', 'question')
         #fields = ['game', 'question', 'answer_1_right_one', 'answer_2', 'answer_3', 'answer_4']
     def validate_data(self):
        data = self.cleaned_data['fields']
@@ -83,9 +74,9 @@ class PlayerGameForm(ModelForm):
 
 class PlayerQuestionsForm(ModelForm):
     class Meta:
-        model = PlayerQuestion
+        model = Question
         fields = '__all__'
-        exclude = ('game_name',)
+        exclude = ('game_mode',)
         #fields = ['game', 'question', 'answer_1_right_one', 'answer_2', 'answer_3', 'answer_4']
     def validate_data(self):
        data = self.cleaned_data['fields']

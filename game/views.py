@@ -60,8 +60,8 @@ def menu(request):
     return render(request, 'game/menu.html')
 
 
-def regular_game(request, question_id=0, gameMode=Question):
-    questions = gameMode.objects.all()
+def regular_game(request, question_id=0, gameMode='elmc'):
+    questions = Question.objects.all().filter(game_mode=gameMode)
     if question_id >= len(questions):
         question_id = 0
     question = questions[question_id]
@@ -74,22 +74,22 @@ def regular_game(request, question_id=0, gameMode=Question):
     answers.append(htmlEscape.htmlspecialchars(question.answer_2))
     answers.append(htmlEscape.htmlspecialchars(question.answer_3))
     answers.append(htmlEscape.htmlspecialchars(question.answer_4))
-    return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat, 'answers' : answers})
+    return render(request, 'game/question.html', {'question': question, 'id': question_id, 'questionstat': questionstat, 'answers' : answers, 'gameMode': gameMode})
 
 
-def check_answer(request, question_id=0, answer=''):
-    questions = Question.objects.all()
-    question = questions[question_id - 1]
-
+def check_answer(request, question_id=0, answer='', gameMode='elmc'):
+    questions = Question.objects.all().filter(game_mode=gameMode)
+    question = questions[question_id]
+    question_id += 1 
     if (answer == htmlEscape.htmlspecialchars(question.answer_1_right_one)):
             if request.user.is_authenticated:
                 currentQuestion = getCurrentQuestion(request, question)
                 currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
                 currentQuestion.save()
                 isEarnedBadge(currentQuestion)
-            return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id})
+            return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
     else:
-        return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id})
+        return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
 
 
 def getCurrentPlayer(request):
@@ -155,8 +155,8 @@ def customGame(request):
 
 
 def customGameQuestions(request, game_names):
-    game = PlayerGame.objects.filter(game_name=game_names)
-
+    game = PlayerGame.objects.get(game_name=game_names)
+    print(game)
     if request.user.is_authenticated:
     # if this is a POST request we need to process the form data
         if request.method == 'POST':
@@ -166,9 +166,7 @@ def customGameQuestions(request, game_names):
             if form.is_valid():
                 # process the data in form.cleaned_data as required
                 newQuestion = form.save(commit=False)
-                newQuestion.game_name = game[0]
-
-                print(newQuestion)
+                newQuestion.game_mode = game
                 newQuestion.save()
                 if request.POST.get("next"):
                     return HttpResponseRedirect('')

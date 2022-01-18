@@ -10,12 +10,14 @@ urlpatterns = [
     #path('game/specialMode', views.specialMode, name='specialMode'),
     path('regularGame', views.regular_game, name='regularGame'),
     path('regularGame/<int:question_id>', views.regular_game, name='regularGame'),
+    path('regularGame/<int:question_id>/<str:gameMode>', views.regular_game, name='regularGame'),
     path('checkAnswer/<int:question_id>/<str:answer>', views.check_answer, name='checkAnswer'),
+    path('checkAnswer/<int:question_id>/<str:answer>/<str:gameMode>', views.check_answer, name='checkAnswer'),
     path('auth/manage', views.manageUser, name='manageUser'),
-    path('game/customGame/create', views.customGame, name='customGame'),
-    path('game/customGame/create/questions/<str:game_names>', views.customGameQuestions, name='customGameQuestions'),
-    #path('game/customGame/start', views.startCustomGame, name='startCustomGame'),
-    path('game/user/statistic', views.gameStatistic, name='gameStatistic'),
+    path('customGame/create', views.customGame, name='customGame'),
+    path('customGame/create/questions/<str:game_names>', views.customGameQuestions, name='customGameQuestions'),
+    #path('customGame/start', views.startCustomGame, name='startCustomGame'),
+    path('user/statistic', views.gameStatistic, name='gameStatistic'),
 
 
 ]
