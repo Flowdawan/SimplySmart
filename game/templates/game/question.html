@@ -1,8 +1,7 @@
 {% extends 'layout.html' %} 
 {% block content %}
 {% load static %}
-
-    <h1> {{ questions.answer_1_right_one }} </h1>
+{% load htmlEscape %}
     <div class="bg-transparent m-4 p-4">
         <h1 class="text-right">Question:</h1>
         <div class="mb-2">
@@ -12,10 +11,10 @@
 
     <div class="list-group">
         <ul class="answers" style="list-style-type:none;">
-            <li><a href="{% url 'checkAnswer' question.id 1 %}" class="list-group-item list-group-item-action">{{ question.answer_1_right_one }}</a></li>
-            <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_2 }}</a></li>
-            <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_3 }}</a></li>
-            <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_4  }}</a></li>
+            <li><a href="{% url 'checkAnswer' id answers.0 gameMode %}" class="list-group-item list-group-item-action">{{ question.answer_1_right_one }}</a></li>
+            <li><a href="{% url 'checkAnswer' id  answers.1 gameMode %}" class="list-group-item list-group-item-action">{{ question.answer_2 }}</a></li>
+            <li><a href="{% url 'checkAnswer' id  answers.2 gameMode %}" class="list-group-item list-group-item-action">{{ question.answer_3 }}</a></li>
+            <li><a href="{% url 'checkAnswer' id  answers.3 gameMode %}" class="list-group-item list-group-item-action">{{ question.answer_4  }}</a></li>
         </ul>
     </div>
 
