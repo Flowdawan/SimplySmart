@@ -1,12 +1,24 @@
+from random import randint
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from game.models import PlayerGameForm
+from game.models import PlayerQuestionsForm
+from game.models import PlayerGame
+
+
 from game.models import Question
 from game.models import MyRegistrationForm
 from game.models import Player
 from game.models import QuestionStat
+
+from game.templatetags import htmlEscape 
+
+def specialMode(request):
+    return redirect('https://simplysmart.at/')
 
 
 # Create your views here.
@@ -48,8 +60,8 @@ def menu(request):
     return render(request, 'game/menu.html')
 
 
-def regular_game(request, question_id=0):
-    questions = Question.objects.all()
+def regular_game(request, question_id=0, gameMode='elmc'):
+    questions = Question.objects.all().filter(game_mode=gameMode)
     if question_id >= len(questions):
         question_id = 0
     question = questions[question_id]
@@ -57,21 +69,27 @@ def regular_game(request, question_id=0):
         questionstat = getCurrentQuestion(request, question)
     else:
         questionstat = ''
-    return render(request, 'game/question.html', {'question': question, 'questionstat': questionstat})
+    answers = []
+    answers.append(htmlEscape.htmlspecialchars(question.answer_1_right_one))
+    answers.append(htmlEscape.htmlspecialchars(question.answer_2))
+    answers.append(htmlEscape.htmlspecialchars(question.answer_3))
+    answers.append(htmlEscape.htmlspecialchars(question.answer_4))
+    return render(request, 'game/question.html', {'question': question, 'id': question_id, 'questionstat': questionstat, 'answers' : answers, 'gameMode': gameMode})
 
 
-def check_answer(request, question_id=0, answer_id=0):
-    questions = Question.objects.all()
-    question = questions[question_id - 1]
-    if (answer_id):
+def check_answer(request, question_id=0, answer='', gameMode='elmc'):
+    questions = Question.objects.all().filter(game_mode=gameMode)
+    question = questions[question_id]
+    question_id += 1 
+    if (answer == htmlEscape.htmlspecialchars(question.answer_1_right_one)):
             if request.user.is_authenticated:
                 currentQuestion = getCurrentQuestion(request, question)
                 currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
                 currentQuestion.save()
                 isEarnedBadge(currentQuestion)
-            return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id})
+            return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
     else:
-        return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id})
+        return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
 
 
 def getCurrentPlayer(request):
@@ -117,10 +135,16 @@ def customGame(request):
                 newGame = form.save(commit=False)
                 newGame.user = request.user
                 newGame.save()
-                # redirect to a new URL:
-                return redirect('menu')
+                if request.POST.get("next"):
+                    game_names = request.POST.get("game_name")
+                    #return redirect('menu')
+                    form = PlayerQuestionsForm()
+                    url = reverse('customGameQuestions', args=(game_names,))
+                    return HttpResponseRedirect(url)
+                else:
+                    return redirect('menu')
             else:
-                return redirect('regularGame')
+                return HttpResponseRedirect('')
 
         # if a GET (or any other method) we'll create a blank form
         else:
@@ -128,3 +152,36 @@ def customGame(request):
             return render(request, 'game/customGame/gameCreate.html', {'form': form})
     else:
         return redirect('signin')
+
+
+def customGameQuestions(request, game_names):
+    game = PlayerGame.objects.get(game_name=game_names)
+    print(game)
+    if request.user.is_authenticated:
+    # if this is a POST request we need to process the form data
+        if request.method == 'POST':
+            # create a form instance and populate it with data from the request:
+            form = PlayerQuestionsForm(request.POST)
+            # check whether it's valid:            
+            if form.is_valid():
+                # process the data in form.cleaned_data as required
+                newQuestion = form.save(commit=False)
+                newQuestion.game_mode = game
+                newQuestion.save()
+                if request.POST.get("next"):
+                    return HttpResponseRedirect('')
+                else:
+                    return redirect('menu')
+            else:
+                print()
+                return redirect('menu')
+            
+        # if a GET (or any other method) we'll create a blank form
+        else:
+            form = PlayerQuestionsForm()
+            return render(request, 'game/customGame/questions.html', {'form': form, 'game_names': game_names})
+    else:
+        return redirect('signin')
+
+def gameStatistic(request):
+    return render(request, 'game/gameStatistic.html')

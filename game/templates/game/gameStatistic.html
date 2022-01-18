@@ -1,0 +1,43 @@
+{% extends 'layout.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="bg-transparent m-4 p-4">
+    <h1 class="text-right">Here are your Statistics for games:</h1>
+
+</div>
+
+<div class="bg-transparent m-4 p-4"> 
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Game</th>
+        <th scope="col">Right answers</th>
+        <th scope="col">Badges</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <th scope="row">1</th>
+        <td>Electronic</td>
+        <td>75%</td>
+        <td>20</td>
+        </tr>
+        <tr>
+        <th scope="row">2</th>
+        <td>Netapps</td>
+        <td>40%</td>
+        <td>10</td>
+        </tr>
+        <tr>
+        <th scope="row">3</th>
+        <td>SE</td>
+        <td>100%</td>
+        <td>48</td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+
+{% endblock %}

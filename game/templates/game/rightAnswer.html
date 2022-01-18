@@ -8,7 +8,7 @@
     <h5 class="card-header">The right answer is:</h5>
     <div class="card-body">
         <p class="card-text">{{ question.answer_1_right_one }} </p>
-        <a href="{% url 'regularGame' id %}" class="btn btn-primary">Go to the next question</a>
+        <a href="{% url 'regularGame' id gameMode %}" class="btn btn-primary">Go to the next question</a>
     </div>
 </div>
 {% endblock %}

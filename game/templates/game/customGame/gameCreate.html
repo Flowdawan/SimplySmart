@@ -17,48 +17,8 @@
             {{ form.game_name }}
           </div>
 
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">Question x:</span>
-            </div>
-            {{ form.question }}
-          </div>
-
-          <div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Right answer:</span>
-              </div>
-              {{ form.answer_1_right_one }}
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Wrong answer 1:</span>
-              </div>
-              {{ form.answer_2 }}
-
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Wrong answer 2:</span>
-              </div>
-              {{ form.answer_3 }}
-            </div>
-
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Wrong answer 3:</span>
-              </div>
-              {{ form.answer_4 }}
-
-            </div>
-          </div>
-
-          <button type="submit" class="btn btn-success btn-sm">Save the game</button>
-          <button type="button" class="btn btn-secondary btn-sm">
-            Create next question
+          <button name="next" value="next" type="submit" class="btn btn-secondary btn-sm">
+            Create first question
           </button>
         </div>
       </form>
