@@ -1,5 +1,6 @@
 {% extends 'layout.html' %} 
 {% block content %}
+{% load static %}
 
     <h1> {{ questions.answer_1_right_one }} </h1>
     <div class="bg-transparent m-4 p-4">
@@ -10,7 +11,7 @@
     </div>
 
     <div class="list-group">
-        <ul style="list-style-type:none;">
+        <ul class="answers" style="list-style-type:none;">
             <li><a href="{% url 'checkAnswer' question.id 1 %}" class="list-group-item list-group-item-action">{{ question.answer_1_right_one }}</a></li>
             <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_2 }}</a></li>
             <li><a href="{% url 'checkAnswer' question.id 0 %}" class="list-group-item list-group-item-action">{{ question.answer_3 }}</a></li>
@@ -18,15 +19,23 @@
         </ul>
     </div>
 
-    <script>
-        var ul = document.querySelector('ul');
-        for (var i = ul.children.length; i >= 0; i--) {
-            ul.appendChild(ul.children[Math.random() * i | 0]);
-        }
-    </script>
-
-    <div class="bg-transparent m-3 p-3">
+    {% if user.is_authenticated %}
+        <div class="bg-transparent m-3 p-3">
         <h6 class="text-center">Your badges here:</h6>
+        {% if questionstat.earned_Badge %}
+        <p class="text-center">You have a BADGE!</p>
+        {% else %}
+        <p class="text-center">You have NOTHING</p>
+        {% endif %}
     </div>
     <span class="badge badge-pill badge-primary">Badge</span>
+    {% else %}
+        <p class="text-center">Please login to see your badges</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+</script>
+    <script type="application/javascript" src="{% static 'js/gameLogic.js' %}"></script>
 {% endblock %}

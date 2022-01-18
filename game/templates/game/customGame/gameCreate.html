@@ -1,0 +1,65 @@
+{% extends 'layout.html' %} 
+{% block content %}
+{% load static %}
+<div class="bg-transparent m-4 p-4">
+  <p class="lead">
+    Here is a form for creating your own customized game. You can choose a name
+    for your new game and add as many questions as you like, once you are done,
+    just go to save the game.
+  </p>
+
+<form method="post">
+  {% csrf_token %}
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">Game name</span>
+            </div>
+            {{ form.game_name }}
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default">Question x:</span>
+            </div>
+            {{ form.question }}
+          </div>
+
+          <div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Right answer:</span>
+              </div>
+              {{ form.answer_1_right_one }}
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Wrong answer 1:</span>
+              </div>
+              {{ form.answer_2 }}
+
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Wrong answer 2:</span>
+              </div>
+              {{ form.answer_3 }}
+            </div>
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Wrong answer 3:</span>
+              </div>
+              {{ form.answer_4 }}
+
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success btn-sm">Save the game</button>
+          <button type="button" class="btn btn-secondary btn-sm">
+            Create next question
+          </button>
+        </div>
+      </form>
+{% endblock %}

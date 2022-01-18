@@ -1,0 +1,11 @@
+{% extends 'layout.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="bg-transparent m-4 p-4">
+    <h1 class="text-right">You don't have any games yet</h1>
+</div>
+
+<a href="{% url 'createGame' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Create now!</a>
+
+{% endblock %}
