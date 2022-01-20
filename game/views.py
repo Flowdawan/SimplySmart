@@ -121,7 +121,10 @@ def isEarnedBadge(question):
         question.save()
 
 def manageUser(request):
-    return render(request, 'auth/manageUser.html')
+    if request.user.is_authenticated:
+        return render(request, 'auth/manageUser.html')
+    else:
+        return redirect('signin')
 
 def customGame(request):
     if request.user.is_authenticated:
@@ -184,4 +187,7 @@ def customGameQuestions(request, game_names):
         return redirect('signin')
 
 def gameStatistic(request):
-    return render(request, 'game/gameStatistic.html')
+        if request.user.is_authenticated:
+            return render(request, 'game/gameStatistic.html')
+        else:
+            return redirect('signin')

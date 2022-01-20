@@ -19,16 +19,18 @@
             </div>
             </div>
         </div>
+
         <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% static 'images/createGame.svg' %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Start the special mode game</h5>
-                <p class="card-text">Enjoy our "Who wants to be a Millionaire?" special edition game</p>
-                <a href="" class="btn btn-primary">Lets go!</a>
-            </div>
-            </div>
-        </div>
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{% static 'images/createGame.svg' %}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">Manage your account</h5>
+                  <p class="card-text">If you want to change your username or e-mail, go here: </p>
+                  <a href="{% url 'manageUser' %}" class="btn btn-primary">Manage</a>
+                </div>
+              </div>
+          </div>
+
         <div class="col">
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="{% static 'images/userManage.svg' %}" alt="Card image cap">
@@ -40,6 +42,19 @@
             </div>
         </div>
     </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{% static 'images/statistics.svg' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">Statistic</h5>
+              <p class="card-text">See you statistic for each game you played </p>
+              <a href="{% url 'customGame' %}" class="btn btn-primary">Statistic</a>
+              </div>
+            </div>
+        </div>
+      </div>
+
     </div>
   
 {% endblock %}
