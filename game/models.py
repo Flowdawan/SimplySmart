@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import EmailField
 from django.forms import ModelForm
 
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
@@ -85,3 +86,19 @@ class PlayerQuestionsForm(ModelForm):
         super(PlayerQuestionsForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
+
+
+class UpdateUserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "password", "email")
+        username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+        email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+        password = forms.CharField(max_length=50, widget=forms.PasswordInput)
+    # def save(self, commit=True):
+    #     user = super(UserCreationForm, self).save(commit=False)
+    #     user.username = self.cleaned_data["username"]
+    #     user.password = make_password(self.cleaned_data["password1"],None, 'pbkdf2_sha256')
+    #     if commit:
+    #         user.save()
+    #     return user

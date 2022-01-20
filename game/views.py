@@ -8,7 +8,7 @@ from django.urls import reverse
 from game.models import PlayerGameForm
 from game.models import PlayerQuestionsForm
 from game.models import PlayerGame
-
+from game.models import UpdateUserForm
 
 from game.models import Question
 from game.models import MyRegistrationForm
@@ -122,7 +122,19 @@ def isEarnedBadge(question):
 
 def manageUser(request):
     if request.user.is_authenticated:
-        return render(request, 'auth/manageUser.html')
+        if request.method == "POST":
+            form = UpdateUserForm(request.POST, instance=request.user)
+            if form.is_valid():
+                password = request.POST['password']
+                user = form.save()
+                user.set_password(password) 
+                user.save()
+                messages.success(request, 'Your profile is updated successfully')
+                return redirect('menu')
+        else:
+            form = UpdateUserForm()
+            return render(request, 'auth/manageUser.html', {'form': form})
+        return render(request, 'menu')
     else:
         return redirect('signin')
 

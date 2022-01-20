@@ -1,24 +1,34 @@
 {% extends 'layout.html' %} 
 {% block content %}
+
 <div class="bg-transparent m-4 p-4">
     <p class="lead">
         If you would like to change your email or username, just type it in here:
     </p>
-
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">New email</span>
         </div>
-        
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input type="email" id="id_{{ form.email.name }}" name="{{ form.email.name }}"  class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"> 
     </div>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroup-sizing-default">New username</span>
         </div>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input type="text" id="id_{{ form.username.name }}" name="{{ form.username.name }}"  class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"> 
     </div>
-    <input class="btn btn-primary" type="submit" value="Submit">
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default">Pasword</span>
+        </div>
+        <input type="password" id="id_{{ form.password.name }}" name="{{ form.password.name }}"  class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"> 
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
 </div>
+
 {% endblock %}

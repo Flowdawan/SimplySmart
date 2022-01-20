@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('signin', views.signin, name='signin'),
@@ -18,7 +19,5 @@ urlpatterns = [
     path('customGame/create/questions/<str:game_names>', views.customGameQuestions, name='customGameQuestions'),
     #path('customGame/start', views.startCustomGame, name='startCustomGame'),
     path('user/statistic', views.gameStatistic, name='gameStatistic'),
-
-
 ]
 
