@@ -11,3 +11,24 @@ function mixQuestions(){
     }
 }
 
+function deleteOneQuestion(rightQuestion){
+    
+    var lis = document.querySelectorAll('.answers li');
+    random = Math.floor(Math.random() * lis.length);
+
+    removedItem = lis[random]
+    removedItemText = removedItem.innerText
+
+    if(removedItemText == rightQuestion){
+        if(random < lis.length-1){
+            random += 1;
+        }else{
+            random -= 1;
+        }
+    }   
+
+    lis[random].remove()
+    document.getElementById('deleteOneQuestionButton').remove()
+
+}
+

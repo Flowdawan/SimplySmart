@@ -14,6 +14,8 @@
             <li><a href="{% url 'checkAnswer' id  answers.2 gameMode %}" class="list-group-item list-group-item-action">{{ question.answer_3 }}</a></li>
             <li><a href="{% url 'checkAnswer' id  answers.3 gameMode %}" class="list-group-item list-group-item-action">{{ question.answer_4  }}</a></li>
         </ul>
+        <button id="deleteOneQuestionButton" name="save" onclick="deleteOneQuestion({{ question.answer_1_right_one }})" type="submit" class="btn btn-warning btn-sm">Joker! Delete one Question</button>
+
     {% if user.is_authenticated %}
         <div class="bg-transparent m-3 p-3">
         <h6 class="text-center">Your badges here:</h6>
