@@ -30,6 +30,7 @@ class Player(models.Model):
 
 
 class QuestionStat(models.Model):
+    game_mode = models.CharField(max_length=150, default='')
     question = models.ForeignKey('game.question', on_delete=models.CASCADE)
     player = models.ForeignKey('game.player', on_delete=models.CASCADE)
     question_text = models.CharField(max_length=650, default='')
@@ -102,3 +103,10 @@ class UpdateUserForm(ModelForm):
     #     if commit:
     #         user.save()
     #     return user
+
+
+class GameModeStat(object):
+    theme = ""
+    questions = 0
+    badges = 0
+    status = 0

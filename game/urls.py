@@ -18,6 +18,6 @@ urlpatterns = [
     path('customGame/create', views.customGame, name='customGame'),
     path('customGame/create/questions/<str:game_names>', views.customGameQuestions, name='customGameQuestions'),
     #path('customGame/start', views.startCustomGame, name='startCustomGame'),
-    path('user/statistic', views.gameStatistic, name='gameStatistic'),
+    path('user/statistic', views.game_statistic, name='gameStatistic'),
 ]
 
