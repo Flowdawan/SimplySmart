@@ -82,26 +82,23 @@ def regular_game(request, question_id=0, gameMode='elmc'):
 
 
 def game_statistic(request):
-    currentuser = getCurrentPlayer(request)
-    answeredquestions = QuestionStat.objects.all().filter(player=currentuser)
-    gamemodes = []
-    gamemodesstats = []
-    print("START SEARCHIN GAMEMODES")
-    print(answeredquestions)
-    for x in answeredquestions:
-        if x.game_mode not in gamemodes:
-            print("in" + x.game_mode)
-            stat = GameModeStat()
-            stat.theme = x.game_mode
-            stat.questions = len(Question.objects.all().filter(game_mode=x.game_mode))
-            print("AMOUNT QUESTIONS: ")
-            print(stat.questions)
-            stat.badges = len(QuestionStat.objects.all().filter(earned_Badge=True, game_mode=x.game_mode, player=currentuser))
-            stat.status = round((stat.badges/stat.questions) * 100, 2)
-            gamemodes.append(x.game_mode)
-            gamemodesstats.append(stat)
-
-    return render(request, 'game/gameStatistic.html', {'gamemodesstats': gamemodesstats})
+    if request.user.is_authenticated:
+        currentuser = getCurrentPlayer(request)
+        answeredquestions = QuestionStat.objects.all().filter(player=currentuser)
+        gamemodes = []
+        gamemodesstats = []
+        for x in answeredquestions:
+            if x.game_mode not in gamemodes:
+                stat = GameModeStat()
+                stat.theme = x.game_mode
+                stat.questions = len(Question.objects.all().filter(game_mode=x.game_mode))
+                stat.badges = len(QuestionStat.objects.all().filter(earned_Badge=True, game_mode=x.game_mode, player=currentuser))
+                stat.status = round((stat.badges/stat.questions) * 100, 2)
+                gamemodes.append(x.game_mode)
+                gamemodesstats.append(stat)
+        return render(request, 'game/gameStatistic.html', {'gamemodesstats': gamemodesstats})
+    else:
+        return redirect('signin')
 
 
 def check_answer(request, question_id=0, answer='', gameMode='elmc'):
