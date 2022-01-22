@@ -2,59 +2,53 @@
 {% block content %}
 {% load static %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Welcome to Simply Smart! Choose one of the options here</h1>
-        </div> 
-    </div>
-    <div class="row">
-        <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% static 'images/electronicsGame.svg' %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Start the regular Electronics game</h5>
-                <p class="card-text">Here you will be offered a broad variety of questions on such topics as GPIO, Interrupts, Timer and many more. Sounds like fun?</p>
-                <a href="{% url 'regularGame' 0 %}" class="btn btn-primary">Start!</a>
-            </div>
-            </div>
-        </div>
+<div class="bg-transparent m-5 p-5 py-0">
+    <h1 class="text-right">Welcome to Simply Smart! Choose one of the options here</h1>
+</div>
 
+<div class="bg-transparent m-5 p-5 py-0">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{% static 'images/createGame.svg' %}" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">Manage your account</h5>
-                  <p class="card-text">If you want to change your username or e-mail, go here: </p>
-                  <a href="{% url 'manageUser' %}" class="btn btn-primary">Manage</a>
-                </div>
-              </div>
+          <div class="card">
+            <img src="{% static 'images/electronicsGame.svg' %}" class="card-img-top" alt="Regular Game">
+            <div class="card-body">
+              <h5 class="card-title">Start the regular Electronics game</h5>
+              <p class="card-text">Here you will be offered a broad variety of questions on such topics as GPIO, Interrupts, Timer and many more. Sounds like fun?</p>
+              <a href="{% url 'regularGame' 0 %}" class="btn btn-primary">Start!</a>
+            </div>
           </div>
-
-        <div class="col">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% static 'images/userManage.svg' %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Create your own game</h5>
-                <p class="card-text">Want to create your own set a question? Have a really good idea for a fun game? </p>
-                <a href="{% url 'customGame' %}" class="btn btn-primary">Yes!</a>
-            </div>
-            </div>
         </div>
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% static 'images/statistics.svg' %}" alt="Card image cap">
+          <div class="card">
+            <img src="{% static 'images/createGame.svg' %}" class="card-img-top" alt="Create Game">
+            <div class="card-body">
+              <h5 class="card-title">Create your own game</h5>
+              <p class="card-text">Want to create your own set a question? Have a really good idea for a fun game?</p>
+              <a href="{% url 'customGame' %}" class="btn btn-primary">Yes!</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="{% static 'images/userManage.svg' %}" class="card-img-top" alt="Manage User">
+            <div class="card-body">
+              <h5 class="card-title">Manage your account</h5>
+              <p class="card-text">If you want to change your username, e-mail or password, go here:</p>
+              <a href="{% url 'manageUser' %}" class="btn btn-primary">Manage</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <img src="{% static 'images/statistics.svg' %}" class="card-img-top" alt="Statstiken">
             <div class="card-body">
               <h5 class="card-title">Statistic</h5>
-              <p class="card-text">See you statistic for each game you played </p>
+              <p class="card-text">See you statistic for each game you played</p>
               <a href="{% url 'gameStatistic' %}" class="btn btn-primary">Statistic</a>
-              </div>
             </div>
+          </div>
         </div>
       </div>
-
-    </div>
+</div>
   
 {% endblock %}
