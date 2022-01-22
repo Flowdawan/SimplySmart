@@ -94,7 +94,10 @@ def game_statistic(request):
                 stat.questions = len(Question.objects.all().filter(game_mode=x.game_mode))
                 stat.badges = len(QuestionStat.objects.all().filter(earned_Badge=True, game_mode=x.game_mode, player=currentuser))
                 rightquestions = len(QuestionStat.objects.all().filter(number_answered_right__gte=1, game_mode=x.game_mode, player=currentuser))
-                stat.status = round((rightquestions/stat.questions) * 100, 2)
+                try:
+                    stat.status = round((rightquestions/stat.questions) * 100, 2)
+                except ZeroDivisionError:
+                    stat.status = 0
                 stat.social_media = "Look! I have completed " + str(stat.status) + "% of the " + stat.theme + \
                                     "-Quiz and earned " + str(stat.badges) + " Badges!\nCheck it out on: "
                 gamemodes.append(x.game_mode)

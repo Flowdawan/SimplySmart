@@ -12,7 +12,7 @@
   {% csrf_token %}
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default">Question x:</span>
+              <span class="input-group-text" id="inputGroup-sizing-default">Question:</span>
             </div>
             {{ form.question }}
           </div>
@@ -50,7 +50,7 @@
           </div>
           <button name="save" type="submit" class="btn btn-success btn-sm">Save the game</button>
           <button name="next" value="next" type="submit" class="btn btn-secondary btn-sm">
-            Create next question
+            Create the next question
           </button>
         </div>
       </form>
