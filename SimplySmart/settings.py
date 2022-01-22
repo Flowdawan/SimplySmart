@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'game.apps.GameConfig',
+    'django_social_share'
 ]
 
 MIDDLEWARE = [

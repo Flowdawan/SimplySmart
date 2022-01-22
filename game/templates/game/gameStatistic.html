@@ -1,12 +1,15 @@
 {% extends 'layout.html' %}
 {% block content %}
 {% load static %}
+{% static "images/facebook_icon.png" as fb_icon %}
+{% static "images/whatsapp_icon.png" as wa_icon %}
+{% static "images/reddit_icon.png" as reddit_icon %}
 
 <div class="bg-transparent m-4 p-4">
     <h1 class="text-right">Here are your Statistics for games:</h1>
 
 </div>
-
+{% load social_share %}
 <div class="bg-transparent m-4 p-4"> 
 <table class="table">
     <thead>
@@ -14,16 +17,27 @@
         <th scope="col">#</th>
         <th scope="col">Game</th>
         <th scope="col">Right answers</th>
-        <th scope="col">Badges</th>
+        <th scope="col"><img src="{% static 'images/badge.png' %}" width="30" height="30"></th>
+        <th scope="col">Share</th>
         </tr>
     </thead>
     <tbody>
         {% for x in gamemodesstats %}
         <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ x.theme }}</td>
+        <td >{{ x.theme }}</td>
         <td>{{ x.status }}%</td>
         <td>{{ x.badges }}/{{ x.questions }}</td>
+        <td>
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item">{% post_to_facebook x.social_media "<i class='fa fa-facebook fa-1x fa-lg' style='color:black;'></i>" %}</li>
+                <li class="list-group-item">{% post_to_whatsapp x.social_media "<i class='fa fa-whatsapp fa-1x fa-lg' style='color:black;'></i>" %}</li>
+                <li class="list-group-item">{% post_to_telegram x.social_media "https://simplysmart.at" "<i class='fa fa-telegram fa-1x fa-lg' style='color:black;'></i>" %}</li>
+                <li class="list-group-item">{% post_to_reddit x.social_media "https://simplysmart.at" "<i class='fa fa-reddit-square fa-1x fa-lg' style='color:black;'></i>" %}</li>
+                <li class="list-group-item">{% post_to_twitter x.social_media "https://simplysmart.at" "<i class='fa fa-twitter fa-1x fa-lg' style='color:black;'></i>" %}</li>
+                <li class="list-group-item">{% send_email "Check this out!" x.social_media "https://simplysmart.at" "<i class='fa fa-envelope fa-1x fa-lg' style='color:black;'></i>"  %}</li>
+            </ul>
+        </td>
         </tr>
         {% endfor %}
     </tbody>

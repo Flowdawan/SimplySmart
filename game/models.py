@@ -110,3 +110,4 @@ class GameModeStat(object):
     questions = 0
     badges = 0
     status = 0
+    social_media = ""

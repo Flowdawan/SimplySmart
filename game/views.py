@@ -93,7 +93,10 @@ def game_statistic(request):
                 stat.theme = x.game_mode
                 stat.questions = len(Question.objects.all().filter(game_mode=x.game_mode))
                 stat.badges = len(QuestionStat.objects.all().filter(earned_Badge=True, game_mode=x.game_mode, player=currentuser))
-                stat.status = round((stat.badges/stat.questions) * 100, 2)
+                rightquestions = len(QuestionStat.objects.all().filter(number_answered_right__gte=1, game_mode=x.game_mode, player=currentuser))
+                stat.status = round((rightquestions/stat.questions) * 100, 2)
+                stat.social_media = "Look! I have completed " + str(stat.status) + "% of the " + stat.theme + \
+                                    "-Quiz and earned " + str(stat.badges) + " Badges!\nCheck it out on: "
                 gamemodes.append(x.game_mode)
                 gamemodesstats.append(stat)
         return render(request, 'game/gameStatistic.html', {'gamemodesstats': gamemodesstats})
@@ -109,7 +112,6 @@ def check_answer(request, question_id=0, answer='', gameMode='elmc'):
         if request.user.is_authenticated:
             currentQuestion = getCurrentQuestion(request, question)
             currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
-            #currentQuestion.game_mode = question.game_mode
             currentQuestion.save()
             isEarnedBadge(currentQuestion)
         return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
@@ -223,12 +225,5 @@ def customGameQuestions(request, game_names):
         else:
             form = PlayerQuestionsForm()
             return render(request, 'game/customGame/questions.html', {'form': form, 'game_names': game_names})
-    else:
-        return redirect('signin')
-
-
-def gameStatistic(request):
-    if request.user.is_authenticated:
-        return render(request, 'game/gameStatistic.html')
     else:
         return redirect('signin')
