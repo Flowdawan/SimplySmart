@@ -3,6 +3,7 @@
 {% load static %}
 {% load htmlEscape %}
     <div class="bg-transparent m-4 p-4">
+        <div class="timer"></div>
         <h1 class="text-right">Question:</h1>
         <div class="mb-2">
             <h5 class="text-right">{{ question }}</h5>
@@ -33,6 +34,8 @@
 {% endblock %}
 
 {% block scripts %}
-</script>
+
     <script type="application/javascript" src="{% static 'js/gameLogic.js' %}"></script>
+    <script type="application/javascript" src="{% static 'js/Timer.js' %}"></script>
+
 {% endblock %}
