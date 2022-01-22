@@ -22,10 +22,6 @@
   cursor: pointer;
 }
 
-.timer__btn--start {
-  background: #00b84c;
-}
-
 .timer__btn--stop {
   background: #ff0256;
 }
