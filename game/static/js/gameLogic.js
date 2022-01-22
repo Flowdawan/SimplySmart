@@ -19,11 +19,6 @@ function deleteOneQuestion(rightQuestion){
     removedItem = lis[random]
     removedItemText = removedItem.innerText
 
-    console.log("Removed item text: " + removedItemText)
-
-    console.log("Removed item: " + removedItem)
-    console.log("Right question: " + rightQuestion)
-
     if(removedItemText == rightQuestion){
         if(random < lis.length-1){
             random += 1;
