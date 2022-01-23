@@ -3,7 +3,11 @@
 {% load static %}
 {% load htmlEscape %}
     <div class="bg-transparent m-4 p-4">
+
+        {% if timebased == 1 %}
         <div class="timer"></div>
+        {% endif %}
+
         <h1 class="text-right">Question:</h1>
         <div class="mb-2">
             <h5 class="text-right">{{ question }}</h5>
@@ -34,7 +38,12 @@
 {% endblock %}
 
 {% block scripts %}
-</script>
+    <script>
+    statsticsUrl = "{% url 'gameStatistic' %}"
+    </script>
     <script type="application/javascript" src="{% static 'js/gameLogic.js' %}"></script>
+    {% if timebased == 1 %}
     <script type="application/javascript" src="{% static 'js/Timer.js' %}"></script>
+    {% endif %}
+
 {% endblock %}

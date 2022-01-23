@@ -3,7 +3,6 @@ class Timer{
 
     constructor(root) {
         root.innerHTML= Timer.getHTML();
-
         this.element = {
             minutes: root.querySelector(".timer__part--minutes"),
             seconds: root.querySelector(".timer__part--seconds"),
@@ -53,8 +52,9 @@ class Timer{
                 alert("Your time is over. \n You will be directed to the statistic Page.");
                 window.setTimeout(function(){
 
+        console.log(statsticsUrl)
         // Move to a new location or you can do something else
-        window.location.href = "http://127.0.0.1:9000/game/user/statistic";
+        window.location.href = statsticsUrl;
 
     }, 1000);
 

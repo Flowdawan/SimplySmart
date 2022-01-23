@@ -62,7 +62,7 @@ def menu(request):
     return render(request, 'game/menu.html')
 
 
-def regular_game(request, question_id=0, gameMode='elmc'):
+def regular_game(request, question_id=0, gameMode='elmc', timebased=0):
     questions = Question.objects.all().filter(game_mode=gameMode)
     if question_id >= len(questions):
         question_id = 0
@@ -78,7 +78,7 @@ def regular_game(request, question_id=0, gameMode='elmc'):
     answers.append(htmlEscape.htmlspecialchars(question.answer_4))
     return render(request, 'game/question.html',
                   {'question': question, 'id': question_id, 'questionstat': questionstat, 'answers': answers,
-                   'gameMode': gameMode})
+                   'gameMode': gameMode, 'timebased':timebased})
 
 
 def game_statistic(request):
