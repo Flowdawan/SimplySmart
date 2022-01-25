@@ -107,7 +107,7 @@ def game_statistic(request):
         return redirect('signin')
 
 
-def check_answer(request, question_id=0, answer='', gameMode='elmc'):
+def check_answer(request, question_id=0, answer='', gameMode='elmc', timebased=0):
     questions = Question.objects.all().filter(game_mode=gameMode)
     question = questions[question_id]
     question_id += 1
@@ -117,10 +117,9 @@ def check_answer(request, question_id=0, answer='', gameMode='elmc'):
             currentQuestion.number_answered_right = currentQuestion.number_answered_right + 1
             currentQuestion.save()
             isEarnedBadge(currentQuestion)
-        return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
+        return render(request, 'game/rightAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode, 'timebased': timebased})
     else:
-        return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode})
-
+        return render(request, 'game/wrongAnswer.html', {'question': question, 'id': question_id, 'gameMode': gameMode, 'timebased': timebased})
 
 def getCurrentPlayer(request):
     currentUser = request.user

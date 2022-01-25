@@ -2,7 +2,6 @@
 {% block content %}
 <body style="background-color:#F1948A">
 
-
 <div class="bg-transparent m-4 p-4">
     <h1 class="text-center">Unfortunately your answer is wrong.</h1>
 </div>
@@ -11,7 +10,7 @@
         <h5 class="card-header">The right answer is:</h5>
         <div class="card-body">
             <p class="card-text">{{ question.answer_1_right_one }}</p>
-            <a href="{% url 'regularGame' id gameMode %}" class="btn btn-primary">Go to the next question</a>
+            <a href="{% url 'regularGame' id gameMode timebased %}" class="btn btn-primary">Go to the next question</a>
         </div>
     </div>
 </div>
