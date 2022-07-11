@@ -50,7 +50,7 @@ For the semester project in the 3rd semester at the FH-Campus Vienna a web appli
 
           ,---------------------------,
           |  /---------------------\  |
-          | | https://simplysmart.at| |
+          | | https://| |
           | | --------------------- | |
           | |                       | |
           | |                       | |
